@@ -264,3 +264,13 @@ selectButton((HResource) null, "RDIResource.FrameControlsPanel_CLOSE_Properties"
 // HMemoryUtils.trashcanNow. Engine heap size: 1,141 MB. GUI used memory: 77 MB. Current time: 2/13/26, 12:04:45 PM CET
 // HMemoryUtils.trashcanNow. Engine heap size: 1,141 MB. GUI used memory: 77 MB. Current time: 2/13/26, 12:05:25 PM CET
 // HMemoryUtils.trashcanNow. Engine heap size: 1,141 MB. GUI used memory: 77 MB. Current time: 2/13/26, 12:06:05 PM CET
+// HMemoryUtils.trashcanNow. Engine heap size: 1,141 MB. GUI used memory: 77 MB. Current time: 2/13/26, 12:06:46 PM CET
+// HMemoryUtils.trashcanNow. Engine heap size: 1,141 MB. GUI used memory: 77 MB. Current time: 2/13/26, 12:07:26 PM CET
+// HMemoryUtils.trashcanNow. Engine heap size: 1,141 MB. GUI used memory: 77 MB. Current time: 2/13/26, 12:08:06 PM CET
+// Elapsed time: 827 seconds
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Constraints]", 2, true); // E (PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE) - Node
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, TOP_MODUL(Behavioral) (TOP_MODUL.vhd)]", 1, false); // E (PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, TOP_MODUL(Behavioral) (TOP_MODUL.vhd)]", 1, false); // E (PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, TOP_MODUL(Behavioral) (TOP_MODUL.vhd)]", 1, false, false, false, false, false, true); // E (PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE) - Double Click
+// HMemoryUtils.trashcanNow. Engine heap size: 1,141 MB. GUI used memory: 77 MB. Current time: 2/13/26, 12:08:46 PM CET
+selectCodeEditor("TOP_MODUL.vhd", 191, 413); // ae (TOP_MODUL.vhd)

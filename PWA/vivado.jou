@@ -1,0 +1,28 @@
+#-----------------------------------------------------------
+# Vivado v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Fri Feb 13 11:45:14 2026
+# Process ID         : 33504
+# Current directory  : C:/Users/andre/OneDrive/Skrivebord/Electrical engineering/4.semester/Digitale systemer, design af/Projekt/Design-of-digital-systems-62711/PWA
+# Command line       : vivado.exe -gui_launcher_event rodinguilauncherevent20496 C:\Users\andre\OneDrive\Skrivebord\Electrical engineering\4.semester\Digitale systemer, design af\Projekt\Design-of-digital-systems-62711\PWA\PWA.xpr
+# Log file           : C:/Users/andre/OneDrive/Skrivebord/Electrical engineering/4.semester/Digitale systemer, design af/Projekt/Design-of-digital-systems-62711/PWA/vivado.log
+# Journal file       : C:/Users/andre/OneDrive/Skrivebord/Electrical engineering/4.semester/Digitale systemer, design af/Projekt/Design-of-digital-systems-62711/PWA\vivado.jou
+# Running On         : StudiePC
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 26200
+# Processor Detail   : AMD Ryzen 7 5800H with Radeon Graphics         
+# CPU Frequency      : 3194 MHz
+# CPU Physical cores : 8
+# CPU Logical cores  : 16
+# Host memory        : 16542 MB
+# Swap memory        : 8053 MB
+# Total Virtual      : 24595 MB
+# Available Virtual  : 9794 MB
+#-----------------------------------------------------------
+start_gui
+open_project {C:/Users/andre/OneDrive/Skrivebord/Electrical engineering/4.semester/Digitale systemer, design af/Projekt/Design-of-digital-systems-62711/PWA/PWA.xpr}
+update_compile_order -fileset sources_1
+remove_files  -fileset constrs_1 C:/Users/andre/OneDrive/Downloads/Nexys_4_DDR_Master.xdc
+add_files -fileset constrs_1 -norecurse {{C:/Users/andre/OneDrive/Skrivebord/Electrical engineering/4.semester/Digitale systemer, design af/Projekt/Design-of-digital-systems-62711/PWA/Nexys_4_DDR_Master.xdc}}

@@ -228,3 +228,9 @@ dismissFileChooser();
 // Elapsed time: 18 seconds
 dismissDialog("Add Sources"); // d (dialog5)
 // HMemoryUtils.trashcanNow. Engine heap size: 1,095 MB. GUI used memory: 77 MB. Current time: 2/13/26, 11:47:59 AM CET
+// HMemoryUtils.trashcanNow. Engine heap size: 1,095 MB. GUI used memory: 77 MB. Current time: 2/13/26, 11:48:39 AM CET
+// HMemoryUtils.trashcanNow. Engine heap size: 1,095 MB. GUI used memory: 77 MB. Current time: 2/13/26, 11:49:19 AM CET
+// Elapsed time: 125 seconds
+selectCodeEditor("Nexys_4_DDR_Master.xdc", 138, 199); // ae (Nexys_4_DDR_Master.xdc)
+// TclEventType: FILE_SET_CHANGE
+// HMemoryUtils.trashcanNow. Engine heap size: 1,095 MB. GUI used memory: 77 MB. Current time: 2/13/26, 11:49:59 AM CET

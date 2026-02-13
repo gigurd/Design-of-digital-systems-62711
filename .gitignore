@@ -1,0 +1,31 @@
+# Vivado generated files
+*.jou
+*.log
+*.str
+*.backup.jou
+*.backup.log
+
+# Vivado run/cache directories
+*.cache/
+*.hw/
+*.ip_user_files/
+*.runs/
+*.sim/
+*.gen/
+
+# Vivado temp/lock files
+*.lck
+.Xil/
+*.wdb
+*.vcd
+
+# Synthesis & implementation reports (regenerated on build)
+*.rpt
+*.dcp
+*.bit
+*.ltx
+*.xsa
+
+# OS junk
+Thumbs.db
+.DS_Store

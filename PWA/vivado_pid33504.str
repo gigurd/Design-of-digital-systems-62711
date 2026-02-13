@@ -234,3 +234,4 @@ dismissDialog("Add Sources"); // d (dialog5)
 selectCodeEditor("Nexys_4_DDR_Master.xdc", 138, 199); // ae (Nexys_4_DDR_Master.xdc)
 // TclEventType: FILE_SET_CHANGE
 // HMemoryUtils.trashcanNow. Engine heap size: 1,095 MB. GUI used memory: 77 MB. Current time: 2/13/26, 11:49:59 AM CET
+// TclEventType: FILE_SET_CHANGE

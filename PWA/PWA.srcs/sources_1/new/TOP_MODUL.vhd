@@ -1,23 +1,8 @@
 ----------------------------------------------------------------------------------
 -- Company: 
 -- Engineer: 
--- 
--- Create Date: 13.02.2026 10:52:10
--- Design Name: 
 -- Module Name: TOP_MODUL - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
 ----------------------------------------------------------------------------------
-
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
@@ -39,6 +24,8 @@ end TOP_MODUL;
 architecture Behavioral of TOP_MODUL is
 
 begin
+process(vara, varb)
+begin
 
-
+end process;
 end Behavioral;

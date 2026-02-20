@@ -35,13 +35,13 @@ entity TOP_MODUL is
 end TOP_MODUL;
 
 architecture Structural of TOP_MODUL is
-
+begin
     -- Component declarations go here
 
-begin
-process(vara, varb)
+
+process(CLK)
 begin
 
     -- Component instantiations go here
-
+end process; 
 end Structural;

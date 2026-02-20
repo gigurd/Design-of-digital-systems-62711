@@ -39,6 +39,8 @@ architecture Structural of TOP_MODUL is
     -- Component declarations go here
 
 begin
+process(vara, varb)
+begin
 
     -- Component instantiations go here
 

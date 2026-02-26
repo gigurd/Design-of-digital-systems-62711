@@ -29,25 +29,7 @@ end ALU;
 
 architecture ALU_Behavorial of ALU is
 
-    component arithmetic is
-        generic (n : integer := 8);
-        Port (A, B     : in  STD_LOGIC_VECTOR(n-1 downto 0);
-              S0, S1   : in  STD_LOGIC;
-              Cin      : in  STD_LOGIC;
-              G        : out STD_LOGIC_VECTOR(n-1 downto 0);
-              Cout     : out STD_LOGIC;
-              overflow : out STD_LOGIC);
-    end component;
-
-    component logic_unit is
-        generic (n : integer := 8);
-        Port (A, B   : in  STD_LOGIC_VECTOR(n-1 downto 0);
-              J1, J0 : in  STD_LOGIC;
-              G      : out STD_LOGIC_VECTOR(n-1 downto 0));
-    end component;
-
     
-
 
 begin
 

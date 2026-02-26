@@ -14,12 +14,32 @@ use IEEE.STD_LOGIC_1164.ALL;
 entity Shifter is
     Port (
         B        : in  STD_LOGIC_VECTOR(7 downto 0);
-        H_Select : in  STD_LOGIC_VECTOR(1 downto 0);
+        HSel : in  STD_LOGIC_VECTOR(1 downto 0);
         H        : out STD_LOGIC_VECTOR(7 downto 0)
     );
 end Shifter;
 
+
 architecture Shifter_Behavorial of Shifter is
+signal sl, sr, HTemp, sNonB: STD_LOGIC;
+signal slB, srB: STD_LOGIC_VECTOR(7 downto 0);
+
 begin
+ -- Styresignal til hvilket shift skal udføres
+ HTemp <= HSel(1) XOR HSel(0);
+
+ -- Enable signal for shift operations
+ sl <= H(1) AND Htemp;
+ sr <= H(0) AND Htemp;
+
+ -- Shift operationer
+ srB(6 downto 0) <= B(7 downto 1);
+ srB(7) <= '0';
+ slB(7 downto 1) <= B(6 downto 0);
+ slB(0) <= '0';
+
+ -- Resultat baseret på H_Select
+ H <= (sr AND srB(7 downto 0)) OR (sl(7 downto 0) AND srB(7 downto 0)) OR (NOT Htemp AND B); 
+
 
 end Shifter_Behavorial;

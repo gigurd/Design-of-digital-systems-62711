@@ -29,8 +29,8 @@ begin
  HTemp <= HSel(1) XOR HSel(0);
 
  -- Enable signal for shift operations
- sl <= H(1) AND Htemp;
- sr <= H(0) AND Htemp;
+ sl <= HSel(1) AND Htemp;
+ sr <= HSel(0) AND Htemp;
 
  -- Shift operationer
  srB(6 downto 0) <= B(7 downto 1);
@@ -39,7 +39,7 @@ begin
  slB(0) <= '0';
 
  -- Resultat baseret på H_Select
- H <= (sr AND srB(7 downto 0)) OR (sl(7 downto 0) AND srB(7 downto 0)) OR (NOT Htemp AND B); 
+ H(7 downto 0) <= (sr AND srB(7 downto 0)) OR (sl(7 downto 0) AND srB(7 downto 0)) OR (NOT Htemp AND B); 
 
 
 end Shifter_Behavorial;

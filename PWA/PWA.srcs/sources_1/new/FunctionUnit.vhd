@@ -13,7 +13,7 @@ entity FunctionUnit is
 end FunctionUnit;
 
 architecture FU_Behavorial of FunctionUnit is
-
+--mangler
     component ALU is
         Port (A, B     : in  STD_LOGIC_VECTOR(7 downto 0);
               JSel : in  STD_LOGIC_VECTOR(3 downto 0);
@@ -39,7 +39,7 @@ architecture FU_Behavorial of FunctionUnit is
               MF : in  STD_LOGIC;
               Y          : out STD_LOGIC_VECTOR(7 downto 0));
     end component;
-
+-- mangler 
     component NegZero is
         Port (MUXF : in  STD_LOGIC_VECTOR(7 downto 0);
               N, Z : out STD_LOGIC);

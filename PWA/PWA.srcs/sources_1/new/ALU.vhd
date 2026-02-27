@@ -29,8 +29,6 @@ end ALU;
 
 architecture ALU_Behavorial of ALU is
 
-    
-
 begin
 
 end ALU_Behavorial;

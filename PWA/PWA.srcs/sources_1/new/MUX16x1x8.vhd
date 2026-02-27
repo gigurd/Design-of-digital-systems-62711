@@ -20,22 +20,23 @@ entity MUX16x1x8 is
 end MUX16x1x8;
 architecture dataflow of MUX16x1x8 is
 begin
-    with D_Select select
-        Y_Data <= R0  when "0000",
-                  R1  when "0001",
-                  R2  when "0010",
-                  R3  when "0011",
-                  R4  when "0100",
-                  R5  when "0101",
-                  R6  when "0110",
-                  R7  when "0111",
-                  R8  when "1000",
-                  R9  when "1001",
-                  R10 when "1010",
-                  R11 when "1011",
-                  R12 when "1100",
-                  R13 when "1101",
-                  R14 when "1110",
-                  R15 when "1111",
-                  (others => '0') when others;
+gen_mux: for i in 0 to 7 generate -- dette loop generer en et bit mux for alle 8 bit data registre
+    Y_Data(i) <=
+       (R0(i)  and (not D_Select(3)) and (not D_Select(2)) and (not D_Select(1)) and (not D_Select(0))) or
+       (R1(i)  and (not D_Select(3)) and (not D_Select(2)) and (not D_Select(1)) and     D_Select(0)) or
+       (R2(i)  and (not D_Select(3)) and (not D_Select(2)) and     D_Select(1) and (not D_Select(0))) or
+       (R3(i)  and (not D_Select(3)) and (not D_Select(2)) and     D_Select(1) and     D_Select(0)) or
+       (R4(i)  and (not D_Select(3)) and     D_Select(2) and (not D_Select(1)) and (not D_Select(0))) or
+       (R5(i)  and (not D_Select(3)) and     D_Select(2) and (not D_Select(1)) and     D_Select(0)) or
+       (R6(i)  and (not D_Select(3)) and     D_Select(2) and     D_Select(1) and (not D_Select(0))) or
+       (R7(i)  and (not D_Select(3)) and     D_Select(2) and     D_Select(1) and     D_Select(0)) or
+       (R8(i)  and     D_Select(3)  and (not D_Select(2)) and (not D_Select(1)) and (not D_Select(0))) or
+       (R9(i)  and     D_Select(3)  and (not D_Select(2)) and (not D_Select(1)) and     D_Select(0)) or
+       (R10(i) and     D_Select(3)  and (not D_Select(2)) and     D_Select(1) and (not D_Select(0))) or
+       (R11(i) and     D_Select(3)  and (not D_Select(2)) and     D_Select(1) and     D_Select(0)) or
+       (R12(i) and     D_Select(3)  and     D_Select(2) and (not D_Select(1)) and (not D_Select(0))) or
+       (R13(i) and     D_Select(3)  and     D_Select(2) and (not D_Select(1)) and     D_Select(0)) or
+       (R14(i) and     D_Select(3)  and     D_Select(2) and     D_Select(1) and (not D_Select(0))) or
+       (R15(i) and     D_Select(3)  and     D_Select(2) and     D_Select(1) and     D_Select(0));
+end generate;
 end dataflow;

@@ -18,12 +18,9 @@ entity logic is
         J0, J1 : in  STD_LOGIC;
         Y      : out STD_LOGIC
     );
-end b_logic;
+end logic;
 
-architecture dataflow of b_logic is
+architecture dataflow of logic is
 begin
-
-
-
 
 end dataflow;

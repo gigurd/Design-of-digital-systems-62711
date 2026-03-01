@@ -34,22 +34,21 @@ signal ASig, BSig: STD_LOGIC_VECTOR(7 downto 0);
 begin
     
     Asig <= A;
-    Bsig(0) <= (B(0) AND JSel(0)) OR ((NOT B(0)) AND JSel(1));
-    Bsig(1) <= (B(1) AND JSel(0)) OR ((NOT B(1)) AND JSel(1));
-    Bsig(2) <= (B(2) AND JSel(0)) OR ((NOT B(2)) AND JSel(1));
-    Bsig(3) <= (B(3) AND JSel(0)) OR ((NOT B(3)) AND JSel(1));
-    Bsig(4) <= (B(4) AND JSel(0)) OR ((NOT B(4)) AND JSel(1));
-    Bsig(5) <= (B(5) AND JSel(0)) OR ((NOT B(5)) AND JSel(1));
-    Bsig(6) <= (B(6) AND JSel(0)) OR ((NOT B(6)) AND JSel(1));
-    Bsig(7) <= (B(7) AND JSel(0)) OR ((NOT B(7)) AND JSel(1));
-
+    Bsig(0) <= (B(0) AND JSel(1)) OR ((NOT B(0)) AND JSel(2));
+    Bsig(1) <= (B(1) AND JSel(1)) OR ((NOT B(1)) AND JSel(2));
+    Bsig(2) <= (B(2) AND JSel(1)) OR ((NOT B(2)) AND JSel(2));
+    Bsig(3) <= (B(3) AND JSel(1)) OR ((NOT B(3)) AND JSel(2));
+    Bsig(4) <= (B(4) AND JSel(1)) OR ((NOT B(4)) AND JSel(2));
+    Bsig(5) <= (B(5) AND JSel(1)) OR ((NOT B(5)) AND JSel(2));
+    Bsig(6) <= (B(6) AND JSel(1)) OR ((NOT B(6)) AND JSel(2));
+    Bsig(7) <= (B(7) AND JSel(1)) OR ((NOT B(7)) AND JSel(2));
 
     full_adder: entity work.full_adder_8_bit
     port map(
             A    => ASig,
             B    => BSig,
             sum  => J,
-            Cin  => Cin,
+            Cin  => JSel(0),
             Cout =>  C
     );
 

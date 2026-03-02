@@ -27,6 +27,7 @@ begin
     );
     
     ASig <= A;
+    
     Bsig(0) <= ((B(0) AND JSel(1)) OR ((NOT B(0)) AND JSel(2))) AND (NOT JSel(3));
     Bsig(1) <= ((B(1) AND JSel(1)) OR ((NOT B(1)) AND JSel(2))) AND (NOT JSel(3));
     Bsig(2) <= ((B(2) AND JSel(1)) OR ((NOT B(2)) AND JSel(2))) AND (NOT JSel(3));
@@ -37,15 +38,10 @@ begin
     Bsig(7) <= ((B(7) AND JSel(1)) OR ((NOT B(7)) AND JSel(2))) AND (NOT JSel(3));
 
 
-
     JLO <= ((7 downto 0=>JSel(3) AND (NOT JSel(1) AND NOT JSel(0)))   AND (A OR B))  OR
            ((7 downto 0=>JSel(3) AND (NOT JSel(1) AND     JSel(0)))   AND (A AND B))  OR
            ((7 downto 0=>JSel(3) AND (    JSel(1) AND NOT JSel(0)))   AND (A XOR B))  OR
            ((7 downto 0=>JSel(3) AND (    JSel(1) AND     JSel(0)))   AND NOT(A));
-
-    
-
-
 
 
 J <= (JLo AND (7 downto 0 => JSel(3))) OR (JAdd AND (7 downto 0 => NOT JSel(3)));

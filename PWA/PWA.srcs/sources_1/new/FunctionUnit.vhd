@@ -13,7 +13,7 @@ entity FunctionUnit is
     );
 end FunctionUnit;   
 
-architecture FU_Behavorial of FunctionUnit is
+architecture FU_Structural of FunctionUnit is
 
 signal MFsig: STD_LOGIC;
 signal FS: STD_LOGIC_VECTOR(3 downto 0);
@@ -61,4 +61,4 @@ port map(
     N => N,
     Z => Z
 );
-end FU_Behavorial;
+end FU_Structural;

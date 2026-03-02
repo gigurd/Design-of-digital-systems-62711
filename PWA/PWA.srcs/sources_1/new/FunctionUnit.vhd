@@ -44,8 +44,6 @@ port map(
 U_FunctionSelect: entity work.FunctionSelect
 port map(
     FS => FS,
-    JSel => FS(3 downto 0),
-    HSel => FS(1 downto 0),
     MF => MFsig
 );
 

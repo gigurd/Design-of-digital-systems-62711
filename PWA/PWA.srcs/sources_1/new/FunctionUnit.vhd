@@ -30,7 +30,7 @@ port map(
     JSel => FS(3 downto 0),
     V => V,
     C => C,
-    Cin => Cin,
+    Cin => Cin, ---------------------------- evalueres "Cin => FS0"? -----------------------------
     J => JSig
 );
 

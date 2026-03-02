@@ -1,6 +1,3 @@
-# Vivado project file (regenerated from sources)
-*.xpr
-
 # Vivado generated files
 *.jou
 *.log

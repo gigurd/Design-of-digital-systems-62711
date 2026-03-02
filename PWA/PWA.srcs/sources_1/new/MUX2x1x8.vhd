@@ -20,8 +20,7 @@ end MUXF;
 architecture Structural of MUXF is
 begin
 
-    Y <= (J AND (others => NOT MF)) OR
-         (H AND (others => MF));
-
+    Y <= (J AND (7 downto 0 => NOT MF)) OR
+         (H AND (7 downto 0 => MF));
 
 end Structural;

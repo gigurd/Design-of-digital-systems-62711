@@ -52,8 +52,8 @@ architecture structural of Datapath is
     end component;
 
     component MUX2x1x8 is
-        Port (R, S       : in  STD_LOGIC_VECTOR(7 downto 0);
-              MUX_Select : in  STD_LOGIC;
+        Port (J, H       : in  STD_LOGIC_VECTOR(7 downto 0);
+              MF         : in  STD_LOGIC;
               Y          : out STD_LOGIC_VECTOR(7 downto 0));
     end component;
 
@@ -81,10 +81,10 @@ begin
 
     -- (3) MUXB: selects between B_Data (MB=0) and ConstantIn (MB=1)
     MUXB: MUX2x1x8 port map (
-        R          => B_Data,
-        S          => ConstantIn,
-        MUX_Select => MB,
-        Y          => Bus_B
+        J  => B_Data,
+        H  => ConstantIn,
+        MF => MB,
+        Y  => Bus_B
     );
 
     -- (2) Function Unit: ALU + Shifter + flags
@@ -105,10 +105,10 @@ begin
 
     -- (3) MUXD: selects between F (MD=0) and DataIn (MD=1)
     MUXD: MUX2x1x8 port map (
-        R          => F_Out,
-        S          => DataIn,
-        MUX_Select => MD,
-        Y          => D_Data
+        J  => F_Out,
+        H  => DataIn,
+        MF => MD,
+        Y  => D_Data
     );
 
     -- Output connections (directly from register file read ports)

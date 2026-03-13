@@ -19,22 +19,31 @@ begin
 
     stim_process: process
     begin
-        -- IR(2:0) = 000 => ZeroFilled = 00000_000 = 0x00
+        -- Test 1: IR(2:0) = 000
         IR <= x"0000";
         wait for 10 ns;
+        assert ZeroFilled_8 = x"00"
+            report "FAIL: ZF test 1 - expected 0x00, got " severity error;
 
-        -- IR(2:0) = 101 => ZeroFilled = 00000_101 = 0x05
+        -- Test 2: IR(2:0) = 101
         IR <= x"0005";
         wait for 10 ns;
+        assert ZeroFilled_8 = x"05"
+            report "FAIL: ZF test 2 - expected 0x05" severity error;
 
-        -- IR(2:0) = 111 => ZeroFilled = 00000_111 = 0x07
+        -- Test 3: IR(2:0) = 111, upper bits don't matter
         IR <= x"FFF7";
         wait for 10 ns;
+        assert ZeroFilled_8 = x"07"
+            report "FAIL: ZF test 3 - expected 0x07" severity error;
 
-        -- IR(2:0) = 011 => ZeroFilled = 00000_011 = 0x03
+        -- Test 4: IR(2:0) = 011
         IR <= x"1233";
         wait for 10 ns;
+        assert ZeroFilled_8 = x"03"
+            report "FAIL: ZF test 4 - expected 0x03" severity error;
 
+        report "ZeroFiller: All tests passed" severity note;
         wait;
     end process;
 

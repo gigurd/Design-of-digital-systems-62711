@@ -39,47 +39,74 @@ begin
         -- Reset
         RESET <= '1';
         wait for CLK_PERIOD * 2;
+        assert PC = x"00"
+            report "FAIL: PC should be 0 after reset" severity error;
         RESET <= '0';
 
-        -- PS=00: Hold (PC should stay 0)
+        -- PS=00: Hold
         PS <= "00";
         wait for CLK_PERIOD * 2;
+        assert PC = x"00"
+            report "FAIL: PC should stay 0 on hold" severity error;
 
-        -- PS=01: Increment (PC should go 1, 2, 3)
+        -- PS=01: Increment 3 times -> 1, 2, 3
         PS <= "01";
-        wait for CLK_PERIOD * 3;
+        wait for CLK_PERIOD;
+        assert PC = x"01"
+            report "FAIL: PC should be 1 after 1st inc" severity error;
+        wait for CLK_PERIOD;
+        assert PC = x"02"
+            report "FAIL: PC should be 2 after 2nd inc" severity error;
+        wait for CLK_PERIOD;
+        assert PC = x"03"
+            report "FAIL: PC should be 3 after 3rd inc" severity error;
 
-        -- PS=00: Hold (PC should stay at 3)
+        -- PS=00: Hold at 3
         PS <= "00";
         wait for CLK_PERIOD;
+        assert PC = x"03"
+            report "FAIL: PC should hold at 3" severity error;
 
-        -- PS=10: Branch with Offset=5 (PC should be 3+5=8)
+        -- PS=10: Branch +5 -> 8
         Offset <= x"05";
         PS <= "10";
         wait for CLK_PERIOD;
+        assert PC = x"08"
+            report "FAIL: PC should be 8 after branch +5" severity error;
 
-        -- PS=00: Hold
+        -- PS=00: Hold at 8
         PS <= "00";
         wait for CLK_PERIOD;
+        assert PC = x"08"
+            report "FAIL: PC should hold at 8" severity error;
 
-        -- PS=10: Branch with negative Offset (-3 = 0xFD) (PC should be 8-3=5)
+        -- PS=10: Branch -3 (0xFD) -> 5
         Offset <= x"FD";
         PS <= "10";
         wait for CLK_PERIOD;
+        assert PC = x"05"
+            report "FAIL: PC should be 5 after branch -3" severity error;
 
-        -- PS=00: Hold
+        -- PS=00: Hold at 5
         PS <= "00";
         wait for CLK_PERIOD;
+        assert PC = x"05"
+            report "FAIL: PC should hold at 5" severity error;
 
-        -- PS=11: Jump to address 0x42 (PC should be 0x42)
+        -- PS=11: Jump to 0x42
         Address_In <= x"42";
         PS <= "11";
         wait for CLK_PERIOD;
+        assert PC = x"42"
+            report "FAIL: PC should be 0x42 after jump" severity error;
 
-        -- PS=00: Hold
+        -- PS=00: Hold at 0x42
         PS <= "00";
-        wait for CLK_PERIOD * 2;
+        wait for CLK_PERIOD;
+        assert PC = x"42"
+            report "FAIL: PC should hold at 0x42" severity error;
 
+        report "ProgramCounter: All tests passed" severity note;
         wait;
     end process;
 

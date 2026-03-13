@@ -22,25 +22,12 @@ begin
 
     UUT: entity work.MicroprogramController
         port map (
-            RESET          => RESET,
-            CLK            => CLK,
-            Address_In     => Address_In,
-            Address_Out    => Address_Out,
-            Instruction_In => Instruction_In,
-            Constant_Out   => Constant_Out,
-            V              => V,
-            C              => C,
-            N              => N,
-            Z              => Z,
-            DX             => DX,
-            AX             => AX,
-            BX             => BX,
-            FS             => FS,
-            MB             => MB,
-            MD             => MD,
-            RW             => RW,
-            MM             => MM,
-            MW             => MW
+            RESET => RESET, CLK => CLK,
+            Address_In => Address_In, Address_Out => Address_Out,
+            Instruction_In => Instruction_In, Constant_Out => Constant_Out,
+            V => V, C => C, N => N, Z => Z,
+            DX => DX, AX => AX, BX => BX, FS => FS,
+            MB => MB, MD => MD, RW => RW, MM => MM, MW => MW
         );
 
     clk_process: process
@@ -55,36 +42,89 @@ begin
         RESET <= '1';
         wait for CLK_PERIOD * 2;
         RESET <= '0';
+        wait for 1 ns;
 
-        -- INF: fetch instruction (ADD: opcode=0000010, DR=001, SA=010, SB=011)
+        -- After reset: INF state, PC=0
+        assert Address_Out = x"00"
+            report "FAIL: Address_Out should be 0 after reset" severity error;
+        assert IL = '1'
+            report "FAIL: IL should be 1 in INF" severity error;
+        assert MM = '1'
+            report "FAIL: MM should be 1 in INF" severity error;
+
+        -- === ADD: opcode=0000010, DR=001, SA=010, SB=011 ===
         Instruction_In <= "0000010001010011";
-        wait for CLK_PERIOD;
+        wait for CLK_PERIOD - 1 ns; -- clock -> EX0, IR loaded
+        wait for 1 ns; -- let combinatorial settle after EX0 entered
+        -- Now in EX0 with ADD decoded
+        assert FS = "0010"
+            report "FAIL MCU ADD: FS should be 0010" severity error;
+        assert RW = '1'
+            report "FAIL MCU ADD: RW should be 1" severity error;
+        assert MW = '0'
+            report "FAIL MCU ADD: MW should be 0" severity error;
 
-        -- EX0: execute ADD
-        wait for CLK_PERIOD;
+        -- Clock -> INF (PC incremented to 1)
+        wait for CLK_PERIOD - 1 ns;
+        wait for 1 ns;
+        assert Address_Out = x"01"
+            report "FAIL MCU: PC should be 1 after ADD" severity error;
+        assert IL = '1'
+            report "FAIL MCU: IL should be 1 in INF" severity error;
 
-        -- INF: fetch next instruction (MOVA: opcode=0000000, DR=100, SA=010, SB=001)
+        -- === MOVA: opcode=0000000, DR=100, SA=010, SB=001 ===
         Instruction_In <= "0000000100010001";
-        wait for CLK_PERIOD;
+        wait for CLK_PERIOD - 1 ns;
+        wait for 1 ns;
+        assert FS = "0000"
+            report "FAIL MCU MOVA: FS should be 0000" severity error;
+        assert RW = '1'
+            report "FAIL MCU MOVA: RW should be 1" severity error;
 
-        -- EX0: execute MOVA
-        wait for CLK_PERIOD;
+        -- Clock -> INF (PC=2)
+        wait for CLK_PERIOD - 1 ns;
+        wait for 1 ns;
+        assert Address_Out = x"02"
+            report "FAIL MCU: PC should be 2 after MOVA" severity error;
 
-        -- INF: fetch LDI instruction (opcode=1001100, DR=010, SB=101)
+        -- === LDI: opcode=1001100, DR=010, SB=101 ===
         Instruction_In <= "1001100010000101";
-        wait for CLK_PERIOD;
+        wait for CLK_PERIOD - 1 ns;
+        wait for 1 ns;
+        assert MB = '1'
+            report "FAIL MCU LDI: MB should be 1" severity error;
+        assert RW = '1'
+            report "FAIL MCU LDI: RW should be 1" severity error;
+        assert Constant_Out = x"05"
+            report "FAIL MCU LDI: Constant_Out should be 0x05" severity error;
 
-        -- EX0: execute LDI
-        wait for CLK_PERIOD;
+        -- Clock -> INF (PC=3)
+        wait for CLK_PERIOD - 1 ns;
+        wait for 1 ns;
+        assert Address_Out = x"03"
+            report "FAIL MCU: PC should be 3 after LDI" severity error;
 
-        -- INF: fetch JMP instruction (opcode=1110000, SA=011)
+        -- === JMP: opcode=1110000, SA=011 ===
         Instruction_In <= "1110000000011000";
         Address_In <= x"20";
-        wait for CLK_PERIOD;
+        wait for CLK_PERIOD - 1 ns;
+        wait for 1 ns;
+        -- EX0 for JMP: PS=11
+        assert RW = '0'
+            report "FAIL MCU JMP: RW should be 0" severity error;
+        assert MW = '0'
+            report "FAIL MCU JMP: MW should be 0" severity error;
 
-        -- EX0: execute JMP
-        wait for CLK_PERIOD * 3;
+        -- Clock -> INF (PC jumped)
+        -- Note: JMP sets PS=11 which loads Address_In into PC
+        -- But Address_In connects to the external bus, not R[SA] in the MPC alone
+        -- The PC should load Address_In = 0x20
+        wait for CLK_PERIOD - 1 ns;
+        wait for 1 ns;
+        assert Address_Out = x"20"
+            report "FAIL MCU: PC should be 0x20 after JMP" severity error;
 
+        report "MicroprogramController: All tests passed" severity note;
         wait;
     end process;
 

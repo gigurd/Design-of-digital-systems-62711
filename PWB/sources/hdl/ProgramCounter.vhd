@@ -14,9 +14,29 @@ entity ProgramCounter is
 end ProgramCounter;
 
 architecture PC_Behavorial of ProgramCounter is
+    signal PC_reg : std_logic_vector(7 downto 0);
 begin
 
-    -- TODO: Implement sequential process (CLK, RESET)
-    -- PS=00: Hold,  PS=01: Increment,  PS=10: Branch,  PS=11: Jump
+    process(CLK, RESET)
+    begin
+        if RESET = '1' then
+            PC_reg <= (others => '0');
+        elsif rising_edge(CLK) then
+            case PS is
+                when "00" =>
+                    PC_reg <= PC_reg;
+                when "01" =>
+                    PC_reg <= PC_reg + 1;
+                when "10" =>
+                    PC_reg <= PC_reg + Offset;
+                when "11" =>
+                    PC_reg <= Address_In;
+                when others =>
+                    PC_reg <= PC_reg;
+            end case;
+        end if;
+    end process;
+
+    PC <= PC_reg;
 
 end PC_Behavorial;

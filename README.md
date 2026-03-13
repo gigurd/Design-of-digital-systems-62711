@@ -18,7 +18,7 @@ Design and implementation of the ALU and DataPath (Register File, Function Unit,
   - `PWA.srcs/sources_1/` -- 17 VHDL source files
   - `PWA.srcs/sim_1/` -- 16 testbenches
 - `Report/` -- LaTeX source (Overleaf submodule, auto-compiled via GitHub Actions)
-- `Group03_PWA.zip` -- Cleaned project ready for submission
+- `Submissions/Group03_PWA.zip` -- Cleaned project ready for submission
 
 ## PWB -- Microprogram Controller
 

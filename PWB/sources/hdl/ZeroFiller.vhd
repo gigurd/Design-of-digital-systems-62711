@@ -11,7 +11,7 @@ end ZeroFiller;
 architecture ZF_Behavorial of ZeroFiller is
 begin
 
-    -- TODO: Implement combinatorial (concurrent) logic
-    -- ZeroFilled_8 = 0.0.0.0.0.IR2.IR1.IR0
+    -- ZeroFilled_8 = 00000.IR2.IR1.IR0
+    ZeroFilled_8 <= "00000" & IR(2 downto 0);
 
 end ZF_Behavorial;

@@ -14,7 +14,15 @@ end InstructionRegister;
 architecture IR_Behavorial of InstructionRegister is
 begin
 
-    -- TODO: Implement sequential process (CLK, RESET)
-    -- IL=0: No Load,  IL=1: Load Instruction
+    process(CLK, RESET)
+    begin
+        if RESET = '1' then
+            IR <= (others => '0');
+        elsif rising_edge(CLK) then
+            if IL = '1' then
+                IR <= Instruction_In;
+            end if;
+        end if;
+    end process;
 
 end IR_Behavorial;

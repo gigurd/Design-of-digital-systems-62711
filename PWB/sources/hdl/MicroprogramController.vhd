@@ -17,15 +17,73 @@ end MicroprogramController;
 
 architecture MCU_Behavorial of MicroprogramController is
 
-    -- TODO: Declare internal signals to wire submodules together
+    signal IR_int      : std_logic_vector(15 downto 0);
+    signal IL_int      : std_logic;
+    signal PS_int      : std_logic_vector(1 downto 0);
+    signal Offset_int  : std_logic_vector(7 downto 0);
+    signal ZF_int      : std_logic_vector(7 downto 0);
 
 begin
 
-    -- TODO: Instantiate ProgramCounter              (1)
-    -- TODO: Instantiate InstructionRegister          (2)
-    -- TODO: Instantiate SignExtender
-    -- TODO: Instantiate ZeroFiller
-    -- TODO: Instantiate InstructionDecoderController (3)
-    -- TODO: Wire Constant_Out from ZeroFiller output
+    -- (1) Program Counter
+    PC: entity work.ProgramCounter
+        port map (
+            RESET      => RESET,
+            CLK        => CLK,
+            Address_In => Address_In,
+            PS         => PS_int,
+            Offset     => Offset_int,
+            PC         => Address_Out
+        );
+
+    -- (2) Instruction Register
+    IR_inst: entity work.InstructionRegister
+        port map (
+            RESET          => RESET,
+            CLK            => CLK,
+            Instruction_In => Instruction_In,
+            IL             => IL_int,
+            IR             => IR_int
+        );
+
+    -- (3) Sign Extender
+    SE: entity work.SignExtender
+        port map (
+            IR         => IR_int,
+            Extended_8 => Offset_int
+        );
+
+    -- (4) Zero Filler
+    ZF: entity work.ZeroFiller
+        port map (
+            IR           => IR_int,
+            ZeroFilled_8 => ZF_int
+        );
+
+    -- (5) Instruction Decoder Controller
+    IDC: entity work.InstructionDecoderController
+        port map (
+            RESET => RESET,
+            CLK   => CLK,
+            IR    => IR_int,
+            V     => V,
+            C     => C,
+            N     => N,
+            Z     => Z,
+            PS    => PS_int,
+            IL    => IL_int,
+            DX    => DX,
+            AX    => AX,
+            BX    => BX,
+            FS    => FS,
+            MB    => MB,
+            MD    => MD,
+            RW    => RW,
+            MM    => MM,
+            MW    => MW
+        );
+
+    -- Constant output from Zero Filler
+    Constant_Out <= ZF_int;
 
 end MCU_Behavorial;

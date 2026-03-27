@@ -11,8 +11,8 @@ end SignExtender;
 architecture SE_Behavorial of SignExtender is
 begin
 
-    -- TODO: Implement combinatorial (concurrent) logic
-    -- IR(8)=0: Extended_8 = 0.0.0.IR7.IR6.IR2.IR1.IR0
-    -- IR(8)=1: Extended_8 = 1.1.1.IR7.IR6.IR2.IR1.IR0
+    -- Extended_8 = sign.sign.sign.IR7.IR6.IR2.IR1.IR0
+    -- sign = IR(8)
+    Extended_8 <= IR(8) & IR(8) & IR(8) & IR(7 downto 6) & IR(2 downto 0);
 
 end SE_Behavorial;

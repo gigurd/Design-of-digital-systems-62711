@@ -26,10 +26,10 @@ DFlipflop: entity work.flip_flop
              CLK   => CLK,
              Reset => Reset,
              D     => DLogic,
-             Q     => Q
+             Q     => Qsig
         );
 
-QSig <= Q;
+Q <= Qsig;
 
 DLogic <= (D AND Load) OR (LoadIn AND (Count XOR QSig)); 
 Co <= QSig AND Cin;

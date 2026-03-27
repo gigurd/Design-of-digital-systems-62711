@@ -16,14 +16,14 @@ end ProgramCounter;
 
 architecture PC_Structural of ProgramCounter is
 
-signal MUXP, CO, sumOffset: STD_LOGIC_VECTOR(7 downto 0); 
-signal Load, Count: STD_LOGIC;
+signal MUXP, CO, sumOffset, PCsig: STD_LOGIC_VECTOR(7 downto 0); 
+signal Load, LoadIn, Cin0, Count: STD_LOGIC;
     begin
 
 
     full_adder: entity work.full_adder_8_bit
     port map(
-             A    => PC,
+             A    => PCsig,
              B    => Offset,
              sum  => sumOffset,
              Cin  => '0'
@@ -35,10 +35,10 @@ signal Load, Count: STD_LOGIC;
     Reset   => Reset,
     CLK     => CLK,
     Load    => Load,
-    LoadIn  => NOT Load,
+    LoadIn  => Loadin,
     D       => MUXP(0),
-    Cin     => NOT Load AND Count, 
-    Q       => PC(0),
+    Cin     => Cin0, 
+    Q       => PCsig(0),
     CO      => CO(0)
     );
     
@@ -48,10 +48,10 @@ signal Load, Count: STD_LOGIC;
     Reset   => Reset,
     CLK     => CLK,
     Load    => Load,
-    LoadIn  => NOT Load,
+    LoadIn  => Loadin,
     D       => MUXP(1),
     Cin     => CO(0),
-    Q       => PC(1),
+    Q       => PCsig(1),
     CO      => CO(1)
     );
     
@@ -61,10 +61,10 @@ signal Load, Count: STD_LOGIC;
     Reset   => Reset,
     CLK     => CLK,
     Load    => Load,
-    LoadIn  => NOT Load,
+    LoadIn  => Loadin,
     D       => MUXP(2),
     Cin     => CO(1),
-    Q       => PC(2),
+    Q       => PCsig(2),
     CO      => CO(2)
     );
     
@@ -74,10 +74,10 @@ signal Load, Count: STD_LOGIC;
     Reset   => Reset,
     CLK     => CLK,
     Load    => Load,
-    LoadIn  => NOT Load,
+    LoadIn  => Loadin,
     D       => MUXP(3),
     Cin     => CO(2),
-    Q       => PC(3),
+    Q       => PCsig(3),
     CO      => CO(3)
     );
 
@@ -87,10 +87,10 @@ signal Load, Count: STD_LOGIC;
     Reset   => Reset,
     CLK     => CLK,
     Load    => Load,
-    LoadIn  => NOT Load,
+    LoadIn  => Loadin,
     D       => MUXP(4),
     Cin     => CO(3),
-    Q       => PC(4),
+    Q       => PCsig(4),
     CO      => CO(4)
     );
     
@@ -100,10 +100,10 @@ signal Load, Count: STD_LOGIC;
     Reset   => Reset,
     CLK     => CLK,
     Load    => Load,
-    LoadIn  => NOT Load,
+    LoadIn  => Loadin,
     D       => MUXP(5),
     Cin     => CO(4),
-    Q       => PC(5),
+    Q       => PCsig(5),
     CO      => CO(5)
     );
     
@@ -113,10 +113,10 @@ Counterlogic6: entity work.CounterLogic
     Reset   => Reset,
     CLK     => CLK,
     Load    => Load,
-    LoadIn  => NOT Load,
+    LoadIn  => Loadin,
     D       => MUXP(6),
     Cin     => CO(5),
-    Q       => PC(6),
+    Q       => PCsig(6),
     CO      => CO(6)
     );
 
@@ -126,16 +126,21 @@ Counterlogic7: entity work.CounterLogic
     Reset   => Reset,
     CLK     => CLK,
     Load    => Load,
-    LoadIn  => NOT Load,
+    LoadIn  => Loadin,
     D       => MUXP(7),
     Cin     => CO(6),
-    Q       => PC(7),
+    Q       => PCsig(7),
     CO      => CarryO
     );
 
+    PC     <= PCsig;
+    Loadin <= NOT Load;
+    Cin0   <= NOT Load AND Count;
     
-    MUXP <=       PS(1)=>(7 downto 0)   AND  NOT PS(0)=>(7 downto 0) AND Address_In  OR
-                  PS(1)=>(7 downto 0)   AND      PS(0)=>(7 downto 0) AND sumOffset;
+   
+    MUXP <= ((7 downto 0 => PS(1)) AND ((NOT (7 downto 0 => PS(0))) AND Address_In))
+         OR ((7 downto 0 => PS(1)) AND      ((7 downto 0 => PS(0)) AND sumOffset));
+
     
 
     Load  <=     (PS(1) AND PS(0)) OR (PS(1) AND NOT PS(0)); 

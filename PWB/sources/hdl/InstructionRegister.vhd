@@ -12,9 +12,17 @@ entity InstructionRegister is
 end InstructionRegister;
 
 architecture IR_Behavorial of InstructionRegister is
+
 begin
 
-    -- TODO: Implement sequential process (CLK, RESET)
-    -- IL=0: No Load,  IL=1: Load Instruction
+Flip : entity work.flip_flop_16
+port map(
+Reset => Reset,
+CLK => CLK,
+D =>  Instruction_In,
+Load => IL,
+Q => IR
+);
+
 
 end IR_Behavorial;

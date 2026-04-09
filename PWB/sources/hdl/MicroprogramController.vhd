@@ -20,7 +20,6 @@ architecture MCU_Structural of MicroprogramController is
     signal IR_sig       : std_logic_vector(15 downto 0);
     signal PS_sig       : std_logic_vector(1 downto 0);
     signal IL_sig       : std_logic;
-    signal PC_sig       : std_logic_vector(7 downto 0);
     signal Extended_sig : std_logic_vector(7 downto 0);
 
 begin
@@ -33,7 +32,7 @@ begin
         PS         => PS_sig,
         Offset     => Extended_sig,
         CarryO     => open,
-        PC         => PC_sig
+        PC         => Address_Out
     );
 
     IR_inst: entity work.InstructionRegister
@@ -78,7 +77,5 @@ begin
         MM    => MM,
         MW    => MW
     );
-
-    Address_Out <= PC_sig;
 
 end MCU_Structural;

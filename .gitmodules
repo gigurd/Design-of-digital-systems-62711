@@ -4,3 +4,6 @@
 [submodule "Report-PWB"]
 	path = Report-PWB
 	url = git@github.com:MadsRudolph/PWB.git
+[submodule "Report-PWF"]
+	path = Report-PWF
+	url = git@github.com:MadsRudolph/PWF.git

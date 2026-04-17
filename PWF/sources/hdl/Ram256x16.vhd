@@ -13,6 +13,12 @@ use UNIMACRO.vcomponents.all;
 -- Uses Artix-7 BRAM_SINGLE_MACRO primitive (18Kb, 16-bit width)
 -- The primitive has 10-bit address (1024 entries); we only use 256 of them
 -- by padding the 8-bit Address_in with two zeros.
+--
+-- The BRAM is clocked on the FALLING edge so that data is valid in time for
+-- the IR (in MPC) to capture it on the NEXT rising edge. PWB's IDC asserts
+-- MM=1 and IL=1 in the same INF cycle, which assumes ~0-cycle memory read.
+-- BRAM is fundamentally synchronous, but driving it half a cycle out of phase
+-- gives the read time to settle so the rising-edge IR load sees valid data.
 entity Ram256x16 is
     port (
         clk        : in  STD_LOGIC;
@@ -30,11 +36,14 @@ architecture RAM_Structural of Ram256x16 is
     signal ADDR_full : STD_LOGIC_VECTOR(9 downto 0);
     -- Byte write enable: 2 bits for 16-bit width in 18Kb mode
     signal WE_sig    : STD_LOGIC_VECTOR(1 downto 0);
+    -- Inverted clock for falling-edge BRAM (see header)
+    signal clk_n     : STD_LOGIC;
 
 begin
 
     ADDR_full <= "00" & Address_in;
     WE_sig    <= (others => MW);
+    clk_n     <= not clk;
 
     BRAM_SINGLE_MACRO_inst : BRAM_SINGLE_MACRO
     generic map (
@@ -69,7 +78,7 @@ begin
     port map (
         DO    => Data_out,     -- 16-bit output data
         ADDR  => ADDR_full,    -- 10-bit address
-        CLK   => clk,
+        CLK   => clk_n,        -- Falling-edge clocking; see header comment
         DI    => Data_in,      -- 16-bit input data
         EN    => '1',          -- RAM always enabled
         REGCE => '1',          -- Output register clock enable (unused since DO_REG=0)

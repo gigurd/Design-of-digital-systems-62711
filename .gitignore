@@ -19,6 +19,10 @@
 *.wdb
 *.vcd
 
+# Local simulation scratch dirs
+sim-build/
+xsim.dir/
+
 # Synthesis & implementation reports (regenerated on build)
 *.rpt
 *.dcp

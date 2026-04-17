@@ -16,6 +16,7 @@ end MUX_MR;
 architecture MUXMR_Behavorial of MUX_MR is
 begin
 
-    -- TODO: Select output based on MMR
+    Data_Bus_Out <= (Data_OutR AND    (15 downto 0 => MMR) ) OR
+                    (Data_OutM AND NOT(15 downto 0 => MMR) );
 
 end MUXMR_Behavorial;

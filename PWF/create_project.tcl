@@ -5,9 +5,15 @@
 # This project references VHDL sources directly from PWA and PWB (no copies).
 # Duplicate modules (flip_flop, full_adder, full_adder_8_bit) are taken from PWA.
 
-# Get the directory where this script lives
-set script_dir [file dirname [file normalize [info script]]]
-set team_dir   [file normalize [file join $script_dir ..]]
+# Get the directory where this script lives.
+# Avoid [file normalize] so that Windows directory junctions (e.g. a no-space
+# alias for paths containing spaces) survive; Vivado's add_files splits on
+# spaces, so resolving a junction back to a space-containing path breaks things.
+set script_dir [file dirname [info script]]
+if {$script_dir eq "" || $script_dir eq "."} {
+    set script_dir [pwd]
+}
+set team_dir   [file join $script_dir ..]
 set pwa_src    [file join $team_dir PWA PWA.srcs sources_1 new]
 set pwb_src    [file join $team_dir PWB sources hdl]
 set pwf_hdl    [file join $script_dir sources hdl]
@@ -52,7 +58,7 @@ set pwa_files [list \
     [file join $pwa_src RegisterR16.vhd]         \
     [file join $pwa_src Shifter.vhd]             \
 ]
-add_files -fileset sources_1 $pwa_files
+foreach f $pwa_files { add_files -norecurse -fileset sources_1 [list $f] }
 
 # ============================================================
 # PWB sources (Microprogram Controller)
@@ -70,20 +76,20 @@ set pwb_files [list \
     [file join $pwb_src SignExtender.vhd]                  \
     [file join $pwb_src ZeroFiller.vhd]                    \
 ]
-add_files -fileset sources_1 $pwb_files
+foreach f $pwb_files { add_files -norecurse -fileset sources_1 [list $f] }
 
 # ============================================================
 # PWF sources (new modules)
 # ============================================================
-add_files -fileset sources_1 [glob [file join $pwf_hdl *.vhd]]
+foreach f [glob [file join $pwf_hdl *.vhd]] { add_files -norecurse -fileset sources_1 [list $f] }
 
 # ============================================================
 # Simulation sources (testbenches)
 # ============================================================
-add_files -fileset sim_1 [glob [file join $pwf_tb *.vhd]]
+foreach f [glob [file join $pwf_tb *.vhd]] { add_files -norecurse -fileset sim_1 [list $f] }
 
 # Add constraints
-add_files -fileset constrs_1 [file join $script_dir Nexys_4_DDR_Master.xdc]
+add_files -norecurse -fileset constrs_1 [list [file join $script_dir Nexys_4_DDR_Master.xdc]]
 
 # Set top module
 set_property top TOP_MODUL_F [current_fileset]

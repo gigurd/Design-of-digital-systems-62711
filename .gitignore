@@ -23,6 +23,9 @@
 sim-build/
 xsim.dir/
 
+# Vivado DFX runtime artifact
+dfx_runtime.txt
+
 # Synthesis & implementation reports (regenerated on build)
 *.rpt
 *.dcp

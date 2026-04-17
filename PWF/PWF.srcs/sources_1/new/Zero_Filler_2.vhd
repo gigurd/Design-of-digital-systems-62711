@@ -32,13 +32,14 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity Zero_Filler_2 is
-    Port ( Data_Out : in STD_LOGIC_VECTOR (15 downto 0);
-           Data_ZF : in STD_LOGIC);
+    Port ( Data_Out : in STD_LOGIC_VECTOR (7 downto 0);
+           Data_ZF :  out STD_LOGIC_VECTOR (15 downto 0));
 end Zero_Filler_2;
 
 architecture Behavioral of Zero_Filler_2 is
 
 begin
-
+    Data_ZF <=  (15 downto 8 => '0') & -- 5 nuller
+                 Data_Out(7 downto 0); --LSB af IR
 
 end Behavioral;
